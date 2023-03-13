@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
+import TemplateView from '../views/TemplateView.vue'
+import TaskPipelineView from '../views/TaskPipelineView.vue'
 
 Vue.use(VueRouter)
 
@@ -29,7 +31,18 @@ const routes = [
     path: '/login',
     name: 'loginView',
     component: LoginView
+  },
+  {
+    path: '/template',
+    name: 'templateView',
+    component: TemplateView
+  },
+  {
+    path: '/taskPipeline',
+    name: 'taskPipelineView',
+    component: TaskPipelineView
   }
+
 ]
 
 const router = new VueRouter({
@@ -45,8 +58,8 @@ router.beforeEach((to, from, next) => {
       next()
     } else {
       next({
-        path: '/login',
-        query: { redirect: to.fullPath }
+        path: '/login'
+        // query: { redirect: to.fullPath }
       })
     }
   } else {
