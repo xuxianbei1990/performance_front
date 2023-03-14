@@ -53,7 +53,7 @@ export default {
             router.push('/')
           }
           if (userMain.role === 1) {
-            //
+            router.push('/')
           }
           if (userMain.role === 2) {
             router.push('/template')

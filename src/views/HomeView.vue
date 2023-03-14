@@ -22,15 +22,22 @@ export default {
       tableData: []
     }
   },
-  performanceList () {
-    this.axios({
-      method: 'GET',
-      url: 'http://localhost:1003/performance/list' + this.$store.getters.getUserId
-    }).then(response => {
-      this.data.tableData = response.data
-    })
-  },
   components: {
+  },
+  methods: {
+    performanceList () {
+      this.axios({
+        method: 'GET',
+        url: 'http://localhost:1003/performance/list?userId=' + this.$store.getters.getUserId
+      }).then(response => {
+        response.data.forEach(element => {
+          this.tableData.push(element)
+        })
+      })
+    }
+  },
+  mounted () {
+    this.performanceList()
   }
 }
 </script>

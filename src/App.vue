@@ -2,7 +2,7 @@
   <div id="app">
     <nav>
       <!-- <router-link to="/">Home</router-link>|
-      <router-link to="/about">About</router-link> -->
+      <router-link to="/about">About</router-link>-->
     </nav>
     <router-view />
   </div>
@@ -45,6 +45,9 @@ export default {
       // window.localStorage.setItem('token', JSON.stringify(this.$store.state))
       window.localStorage.setItem('token', this.$store.state.token)
     })
+  },
+  methods: {
+
   },
   destroyed () {
     // localStorage.removeItem('store')

@@ -165,7 +165,7 @@ export default {
         })
       }
       this.dialogVisible = false
-      // window.location.reload()
+      window.location.reload()
     }
   },
   mounted () {
