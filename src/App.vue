@@ -38,12 +38,15 @@ export default {
     if (window.localStorage.getItem('token')) {
       // this.$store.replaceState(Object.assign({}, this.$store.state, JSON.parse(window.localStorage.getItem('token'))))
       this.$store.commit('setToken', window.localStorage.getItem('token'))
-      console.info('++' + this.$store.state.token)
+      this.$store.commit('setUserId', window.localStorage.getItem('userId'))
+      this.$store.commit('setUser', window.localStorage.getItem('userMain'))
     }
 
     window.addEventListener('beforeunload', () => {
       // window.localStorage.setItem('token', JSON.stringify(this.$store.state))
       window.localStorage.setItem('token', this.$store.state.token)
+      window.localStorage.setItem('userId', this.$store.state.userId)
+      window.localStorage.setItem('userMain', this.$store.state.userMain)
     })
   },
   methods: {

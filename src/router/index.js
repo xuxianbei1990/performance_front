@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import TemplateView from '../views/TemplateView.vue'
 import TaskPipelineView from '../views/TaskPipelineView.vue'
+import PerformanceDetail from '../views/PerformanceDetailView.vue'
 
 Vue.use(VueRouter)
 
@@ -41,6 +42,11 @@ const routes = [
     path: '/taskPipeline',
     name: 'taskPipelineView',
     component: TaskPipelineView
+  },
+  {
+    path: '/performanceDetail',
+    name: 'performanceDetail',
+    component: PerformanceDetail
   }
 
 ]

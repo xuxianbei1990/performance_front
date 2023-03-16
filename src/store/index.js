@@ -7,7 +7,8 @@ export default new Vuex.Store({
   state: {
     token: false,
     userId: -1,
-    userMain: null
+    userMain: null,
+    data: ''
   },
   getters: {
     getUserId (s) {
@@ -15,6 +16,9 @@ export default new Vuex.Store({
     },
     getUser (s) {
       return s.userMain
+    },
+    getData () {
+      return this.data
     }
   },
   mutations: {
@@ -22,13 +26,17 @@ export default new Vuex.Store({
       s.token = d
       // window.localStorage.setItem('token', JSON.stringify(s.token))
       window.localStorage.setItem('token', s.token)
-      // console.info(window.localStorage.getItem('token'))
     },
     setUserId (s, d) {
       s.userId = d
+      window.localStorage.setItem('userId', s.userId)
     },
     setUser (s, d) {
       s.userMain = d
+      window.localStorage.setItem('userMain', s.userMain)
+    },
+    setData (s, d) {
+      s.data = d
     }
   },
   actions: {
