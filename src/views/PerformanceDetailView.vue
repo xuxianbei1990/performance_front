@@ -1,6 +1,7 @@
 <template>
   <div id="performanceDetail">
     <h1>绩效明细</h1>
+    <el-button type="primary" @click="commit">提交</el-button>
     <el-table
       :data="details"
       style="width: 80%"
@@ -27,27 +28,43 @@ export default {
   data () {
     return {
       details: [],
-      oldCellValue: null
+      oldCellValue: null,
+      id: ''
     }
   },
   methods: {
+    closePage () {
+      window.opener = null
+      window.open('about:blank', '_self')
+      window.close()
+    },
+    commit () {
+      this.axios({
+        method: 'POST',
+        url: 'http://localhost:1003/performance/update/detail',
+        data: this.details
+      })
+      this.axios({
+        method: 'GET',
+        url: 'http://localhost:1003/performance/commit?id=' + this.id
+      })
+      this.closePage()
+    },
     cellClassName ({ row, column, rowIndex, columnIndex }) {
       row.index = rowIndex // 自定义指定一个索引，下方能够用到
+      column.index = columnIndex
     },
     editCell (row, column, cell, event) {
-      // 1. 序号列单元格不允许编辑，别的列单元格可以编辑
-      if (column.label === '序号') {
-        this.$message({
-          type: 'warning',
-          message: '序号列不允许编辑'
-        })
+      if (column.index <= 3) {
+        // this.$message({
+        //   type: 'warning',
+        //   message: '序号列不允许编辑'
+        // })
         return
       }
-      // 2. 存一份旧的单元格的值
       this.oldCellValue = row[column.property]
-      // 3. 然后把单元格的值，作为参数传递给实例化的input组件
       const cellValue = row[column.property]
-      // 4. 实例化组件以后，带着参数，再挂载到对应位置
+      // 实例化组件以后，带着参数，再挂载到对应位置
       new extendComponents.InputC({
         propsData: {
           // 使用propsData对象传递参数，子组件在props中可以接收到
@@ -70,12 +87,9 @@ export default {
       if (params.cellValue === this.oldCellValue) {
         console.log('未修改数据，不用发请求')
       } else {
+        console.info(this.details[params.row.index])
+        console.info(params.row)
         params.row[params.property] = params.cellValue
-        // 这里模拟一下发了请求，得到最新表体数据以后，更新details
-        setTimeout(() => {
-          //        给那个数组的     第几项            修改为什么值
-          this.$set(this.details, params.row.index, params.row)
-        }, 300)
       }
       // 2. 恢复dom节点成为原来的样子，有下面两种方式
 
@@ -98,7 +112,7 @@ export default {
   },
   mounted () {
     this.getDetail(this.$route.query.data)
-    console.info(this.$route.query.data)
+    this.id = this.$route.query.data
   }
 }
 </script>

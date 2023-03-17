@@ -17,8 +17,8 @@ export default new Vuex.Store({
     getUser (s) {
       return s.userMain
     },
-    getData () {
-      return this.data
+    getData (s) {
+      return s.data
     }
   },
   mutations: {

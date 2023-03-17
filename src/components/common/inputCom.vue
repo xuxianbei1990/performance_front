@@ -30,7 +30,7 @@ export default {
     blurFn () {
       // 失去焦点，再抛出去，通知外部
       this.saveRowData({
-        cellValue: this.cellValue,
+        cellValue: this.localCellValue,
         cellDom: this.cellDom,
         row: this.row,
         property: this.property
