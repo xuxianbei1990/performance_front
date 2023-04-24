@@ -2,6 +2,7 @@
   <div class="templateView">
     <router-link to="/taskPipeline">任务流</router-link>|
     <router-link to="/template">模板配置</router-link>
+    <router-link to="/team">团队配置</router-link>
     <h1>模板配置</h1>
     <el-row>
       <el-col :span="3">

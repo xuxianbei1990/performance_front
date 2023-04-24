@@ -5,6 +5,7 @@ import LoginView from '../views/LoginView.vue'
 import TemplateView from '../views/TemplateView.vue'
 import TaskPipelineView from '../views/TaskPipelineView.vue'
 import PerformanceDetail from '../views/PerformanceDetailView.vue'
+import TeamView from '../views/TeamView.vue'
 
 Vue.use(VueRouter)
 
@@ -47,6 +48,11 @@ const routes = [
     path: '/performanceDetail',
     name: 'performanceDetail',
     component: PerformanceDetail
+  },
+  {
+    path: '/team',
+    name: 'teamView',
+    component: TeamView
   }
 
 ]
