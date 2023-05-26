@@ -8,7 +8,8 @@
       <el-col :span="3">
         <el-button type="primary" @click="add">新增</el-button>
         <el-button type="primary" @click="update">更新</el-button>
-        <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="50%">
+        <el-button type="primary" @click="deleteItem">删除</el-button>
+        <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="80%">
           <el-input placeholder="模板名称" v-model="templateName"></el-input>
           <el-form :model="dynamicValidateForm" ref="dynamicValidateForm" class="demo-dynamic">
             <el-form-item>
@@ -30,7 +31,7 @@
                   <el-input v-model="domain.targetName"></el-input>
                 </el-col>
                 <el-col :span="6">
-                  <el-input v-model="domain.metrics"></el-input>
+                  <el-input v-model="domain.metrics" type="textarea"></el-input>
                 </el-col>
                 <el-col :span="6">
                   <el-input v-model="domain.weight"></el-input>
@@ -43,7 +44,7 @@
         </el-dialog>
       </el-col>
     </el-row>
-    <el-table :data="tableData" ref="singleTable" style="width: 100%" @row-click="setCurrent">
+    <el-table :data="tableData" ref="singleTable" style="width: 100%" @row-click="setCurrent" :row-style="isActive">
       <el-table-column prop="id" label="ID"></el-table-column>
       <el-table-column prop="templateName" label="模板名称"></el-table-column>
       <el-table-column prop="period" label="周期"></el-table-column>
@@ -94,6 +95,18 @@ export default {
         }
       })
     },
+    isActive ({ row }) {
+      if (this.selectTemplate === row) {
+        return {
+          backgroundColor: '#96c7d2'
+        }
+      }
+      if (this.stepItem === row) {
+        return {
+          backgroundColor: '#96c7d2'
+        }
+      }
+    },
     addDomain () {
       this.dynamicValidateForm.domains.push({
         targetName: '',
@@ -106,6 +119,13 @@ export default {
       this.templateId = this.selectTemplate.templateId
       this.templateName = this.selectTemplate.templateName
       this.dynamicValidateForm.domains = this.selectTemplate.detailList
+    },
+    deleteItem () {
+      this.axios({
+        method: 'GET',
+        url: 'http://localhost:1003/template/performance/delete?id=' + this.selectTemplate.id
+      })
+      window.location.reload()
     },
     removeDomain (item) {
       const index = this.dynamicValidateForm.domains.indexOf(item)

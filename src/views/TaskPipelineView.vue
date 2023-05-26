@@ -171,6 +171,10 @@ export default {
       this.axios({
         method: 'GET',
         url: 'http://localhost:1003/task/pipeline/send'
+      }).then((response) => {
+        if (response.data === 1) {
+          this.$message('发送成功')
+        }
       })
     },
     isActive ({ row }) {
@@ -205,7 +209,8 @@ export default {
       taskPipeline.userName = this.$data.userValue.label
       taskPipeline.templatePerformanceId = this.$data.templateValue.value
       taskPipeline.templatePerformanceName = this.$data.templateValue.label
-      taskPipeline.step = parseInt(this.$data.step)
+      console.info(this.$data.step)
+      taskPipeline.step = parseInt(this.$data.step.stepValue)
       console.info(taskPipeline)
       this.axios({
         method: 'POST',

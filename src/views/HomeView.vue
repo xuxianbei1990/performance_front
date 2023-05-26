@@ -6,7 +6,7 @@
         <el-table
           :data="tableData"
           style="width: 100%"
-          @row-click="setCurrent"
+          @row-dblclick="setCurrent"
           :header-cell-style="{'text-align':'center'}"
           :cell-style="{'text-align':'center'}"
         >
@@ -15,7 +15,7 @@
           <el-table-column prop="period" label="周期"></el-table-column>
           <el-table-column prop="activityName" label="活动名称"></el-table-column>
           <el-table-column prop="step" label="当前步骤"></el-table-column>
-          <el-table-column prop="status" label="绩效状态"></el-table-column>
+          <el-table-column prop="status" label="绩效状态" :formatter="formatter"></el-table-column>
           <el-table-column prop="score" label="总分"></el-table-column>
         </el-table>
       </el-tab-pane>
@@ -23,8 +23,7 @@
         <el-table
           :data="teamData"
           style="width: 100%"
-          @row-click="setCurrent"
-          :row-style="isActive"
+          @row-dblclick="setCurrent"
           ref="singleTable"
           :header-cell-style="{'text-align':'center'}"
           :cell-style="{'text-align':'center'}"
@@ -36,7 +35,7 @@
           <el-table-column prop="period" label="周期"></el-table-column>
           <el-table-column prop="activityName" label="活动名称"></el-table-column>
           <el-table-column prop="step" label="当前步骤"></el-table-column>
-          <el-table-column prop="status" label="绩效状态"></el-table-column>
+          <el-table-column prop="status" label="绩效状态" :formatter="formatter"></el-table-column>
           <el-table-column prop="score" label="总分"></el-table-column>
         </el-table>
       </el-tab-pane>
@@ -59,6 +58,9 @@ export default {
   components: {
   },
   methods: {
+    formatter (row, column) {
+      return row.status === 0 ? '进行中' : row.status === 1 ? '结束' : ''
+    },
     setCurrent (row, column, event) {
       this.$store.commit('setData', row)
       const routeUrl = this.$router.resolve({
@@ -81,10 +83,21 @@ export default {
           this.tableData.push(element)
         })
       })
+    },
+    teamPerformanceList () {
+      this.axios({
+        method: 'GET',
+        url: 'http://localhost:1003/team/performance/list?userid=' + this.$store.getters.getUserId
+      }).then(response => {
+        response.data.forEach(element => {
+          this.teamData.push(element)
+        })
+      })
     }
   },
   mounted () {
     this.performanceList()
+    this.teamPerformanceList()
   }
 }
 </script>

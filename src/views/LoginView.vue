@@ -7,9 +7,9 @@
         <el-input placeholder="密码" v-model="userPwd"></el-input>
         <el-input placeholder="部门" v-model="department" v-show="show">研发一部</el-input>
         <div v-show="show">
-          <el-radio v-model="role" label="0">普通</el-radio>
-          <el-radio v-model="role" label="1">管理</el-radio>
-          <el-radio v-model="role" label="2">admin</el-radio>
+          <el-radio v-model="role" label="0">员工</el-radio>
+          <el-radio v-model="role" label="1">管理员</el-radio>
+          <el-radio v-model="role" label="2">系统管理员</el-radio>
         </div>
         <el-button type="text" @click="login" v-show="loginshow">登录</el-button>
         <el-button type="text" @click="register">注册</el-button>
@@ -91,7 +91,12 @@ export default {
             this.$message('注册成功')
             this.show = false
             this.loginshow = true
+          } else {
+            this.$message(response.data)
           }
+        }).catch(exception => {
+          console.info(exception)
+          this.$message(exception)
         })
       }
     }
